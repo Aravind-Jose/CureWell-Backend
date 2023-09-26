@@ -12,8 +12,6 @@ namespace CureWellProject.DAL
     public class DoctorServicesImpl : DoctorService
     {
         static string connectionString = ConfigurationManager.ConnectionStrings["dbConnect"].ConnectionString;
-        private SqlConnection conn;
-        private SqlCommand comm;
         public bool AddDoctor(Doctor doctor)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

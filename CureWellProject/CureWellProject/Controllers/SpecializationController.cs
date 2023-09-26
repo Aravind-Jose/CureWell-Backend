@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace CureWellProject.Controllers
 {
+    [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
     public class SpecializationController : ApiController
     {
         private readonly SpecializationServices specializationServices;
@@ -17,8 +18,19 @@ namespace CureWellProject.Controllers
         }
         public IHttpActionResult Get()
         {
-            var data = specializationServices.GetAllSpecializations();
-            return Ok(data);
+            try
+            {
+                var data = specializationServices.GetAllSpecializations();
+                if (data == null || data.Count() == 0)
+                {
+                    return Content(HttpStatusCode.NotFound, data);
+                }
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, false);
+            }
         }
     }
 }
