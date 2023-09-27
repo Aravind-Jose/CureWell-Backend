@@ -18,6 +18,7 @@ namespace CureWellProject.Controllers
         {
             doctorSpecializationServices = new DoctorSpecializationServicesImpl();
         }
+        [Route("api/doctorspecialization/{specializationCode}")]
         [HttpGet]
         public IHttpActionResult Get(string specializationCode)
         {

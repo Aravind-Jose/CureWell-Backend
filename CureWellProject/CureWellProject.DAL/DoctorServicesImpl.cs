@@ -90,9 +90,10 @@ namespace CureWellProject.DAL
         public List<Doctor> GetAllDoctors()
         {
             List<Doctor> doctors = new List<Doctor>();
-            try
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                try
                 {
                     connection.Open();
                     string sqlQuery = "SELECT * FROM doctor";
@@ -112,10 +113,15 @@ namespace CureWellProject.DAL
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message); 
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
             return doctors;
         }
